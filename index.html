@@ -10,7 +10,7 @@
         html {
 
             text-align: center;
-            background-color: tomato;
+            background-color: rgb(255, 101, 74);
             height: 100vh;
             display: grid;
             place-items: center;
@@ -26,13 +26,13 @@
 
         h1 {
             font-size: 8rem;
-            margin-bottom: 2rem;
-            ;
+            margin-bottom: 3rem;
+
         }
 
 
         button {
-            background-color: tomato;
+            background-color: goldenrod;
             border: none;
             cursor: pointer;
             border-radius: 5px;
@@ -49,9 +49,10 @@
         }
 
         .input-wrapper {
-            background-color: #f4f4f4;
+            background-color: white;
             border-radius: 5px;
             padding: 1.5rem 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, .15);
         }
     </style>
 </head>
@@ -73,13 +74,21 @@
         const noteSlider = document.getElementById("range");
         const button = document.getElementById("button");
         let numOfNotes = 2;
-        let addAccidentals = true;
+        let addAccidentals = false;
         noteSlider.value = numOfNotes;
 
         noteSlider.oninput = changeNumOfNotes;
         button.onclick = newNotes;
+        document.onkeydown = handleDocumentKeyDown;
+
+        function handleDocumentKeyDown(e) {
+            if (e.keyCode === 13) {
+                button.click();
+            }
+        }
 
         function changeNumOfNotes(e) {
+            console.log(numOfNotes);
             numOfNotes = e.target.value;
             newNotes();
         }
@@ -91,37 +100,23 @@
 
         function getRandomNotes(numOfNotes) {
 
-            let notes = getNaturalNotesInRandomOrder().slice(0, numOfNotes);
+            let notes = shuffle(getNaturalNotes()).slice(0, numOfNotes);
 
-            if(addAccidentals) {
-                
+            if (addAccidentals) {
                 notes = notes.map(n => {
-                    //All notes that can both be flat and sharp
-                    if('DGA'.includes(n)) {
-                        if(Math.random() > 0.5) {
-                            return n + "" + (Math.random() >= 0.5 ? 'b' : '#');
-                        }
+                    if (Math.random() >= 0.7) {
+                        if ('DGA'.includes(n)) { return n + "" + (Math.random() >= 0.5 ? 'b' : '#') }
                     }
-
-                    return n
+                    return n;
                 })
             }
 
-            console.log(notes);
-
             return notes;
-
-
         }
 
 
-        function getNaturalNotesInRandomOrder() {
-
-            const notes = 'ABCDEFG'.split('');
-
-            return shuffle(notes);
-
-
+        function getNaturalNotes() {
+            return 'ABCDEFG'.split('');
         }
 
         function shuffle(array) {
