@@ -1,0 +1,117 @@
+:root {
+    --slider-container-height: 2rem;
+    --slider-container-width: calc(var(--slider-container-height) * 2);
+    --slider-size: calc(var(--slider-container-height) * 0.7);
+    --slider-padding: calc(var(--slider-container-height) * 0.15);
+}
+
+#notes {
+    font-size: clamp(2rem, 8vw, 7rem);
+    padding: 0 2rem;
+    margin-bottom: var(--largest);
+    color: #fff;
+    animation: enter 0.5s ease-in-out;
+    font-family: "Lexend Mega", sans-serif;
+    text-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+}
+
+button {
+    background-color: #378ad3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    padding: 0.75rem 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: var(--small);
+}
+
+.input-wrapper {
+    background-color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: var(--medium);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+#add-accidentals {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+#add-accidentals:checked + label .slider {
+    background-color: rgb(0, 153, 255);
+}
+
+#add-accidentals:checked + label .slider::after {
+    transform: translateX(calc(var(--slider-container-width) - var(--slider-size) - var(--slider-padding)));
+}
+
+label[for="add-accidentals"] {
+    text-align: center;
+}
+
+.slider {
+    border-radius: 100vh;
+    box-sizing: content-box;
+    height: var(--slider-container-height);
+    width: var(--slider-container-width);
+    background-color: #ccc;
+    margin: 0 auto;
+    margin-top: var(--small);
+    display: flex;
+    align-items: center;
+    padding-left: var(--slider-padding);
+    transition: all 0.3s ease-out;
+}
+
+.slider::after {
+    content: "";
+    border-radius: 50%;
+    display: block;
+    background: #fff;
+    height: var(--slider-size);
+    width: var(--slider-size);
+    transition: inherit;
+}
+
+.form-control {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group {
+    font-size: 1.5rem;
+}
+
+@keyframes enter {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes exit {
+    from {
+        transform: translateY(10px);
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
